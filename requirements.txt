@@ -1,2 +1,6 @@
 # Django LTS and plugins
 django==1.10.3
+
+# beautiful admin site
+# http://grappelliproject.com/
+django-grappelli==2.8.1
