@@ -139,3 +139,4 @@ STATIC_URL = '/static/'
 
 
 from ._cache import *  # noqa
+from ._logging import *  # noqa
