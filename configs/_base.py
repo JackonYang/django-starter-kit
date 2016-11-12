@@ -13,20 +13,33 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = (os.getenv('DEBUG', 'FALSE').upper() != 'FALSE')
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(  # project-name
+    os.path.dirname(  # configs
+        os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#y*85qjprm)e7o9cd+d#fg&ew%6%l4oweskwc+3&@f+32xu*k^'
+DEFAULT_SECRET_KEY = 'django-starter-kit-default-secret-key'
+SECRET_KEY = os.getenv('SECRET_KEY', DEFAULT_SECRET_KEY)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+DOMAIN_NAME = os.getenv('DOMAIN_NAME', 'localhost')
 
 ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS = [
+        DOMAIN_NAME,
+        '.{}'.format(DOMAIN_NAME),
+    ]
 
 
 # Application definition
