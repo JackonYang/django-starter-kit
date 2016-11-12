@@ -28,6 +28,8 @@ def home(request,
         'hits': redis.get(key),
     }
 
+    logger.info('hits: {hits}'.format(**context))
+
     return TemplateResponse(request, template_name, context)
 
 

@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
+import os
 import logging.config
+
+
+# PARAMS
+LOG_ROOT_DIR = 'log'
+
+if not os.path.exists(LOG_ROOT_DIR):
+    os.makedirs(LOG_ROOT_DIR)
 
 
 # the automatic configuration process is disabled, not logging itself.
@@ -34,13 +42,29 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'basic',
         },
+        'django_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'django.log'),
+            'formatter': 'verbose',
+        },
+        'root_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'root.log'),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'django': {
             'level': 'INFO',
-            'handlers': ['console'],
+            'handlers': ['console', 'django_file'],
             'propagate': False,
         },
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['root_file'],
     },
 }
 
