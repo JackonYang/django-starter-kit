@@ -1,6 +1,8 @@
 # .gitignore by jackon.me
 
 
+*.sqlite3
+
 *.log
 
 # Redis
