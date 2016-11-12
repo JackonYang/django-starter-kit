@@ -19,9 +19,15 @@ from django.contrib import admin
 
 from . import views
 
+api_patterns = [
+    url(r'^$', views.api_home, name='api_home'),
+]
+
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^api/', include(api_patterns)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', admin.site.urls),
 ]

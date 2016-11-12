@@ -4,3 +4,7 @@ django==1.10.3
 # beautiful admin site
 # http://grappelliproject.com/
 django-grappelli==2.8.1
+
+djangorestframework==3.4.7
+markdown==2.6.7
+django-filter==0.15.2

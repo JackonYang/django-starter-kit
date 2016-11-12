@@ -2,7 +2,11 @@
 import socket
 import logging
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 from django.template.response import TemplateResponse
+
 
 logger = logging.getLogger(__name__)
 
@@ -18,3 +22,11 @@ def home(request,
     }
 
     return TemplateResponse(request, template_name, context)
+
+
+@api_view(['GET'])
+def api_home(request):
+    user = request.user
+
+    return Response('Hello %s!'
+                    'My Host name is %s.' % (user, host))
