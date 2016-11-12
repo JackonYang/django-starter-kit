@@ -4,7 +4,10 @@ import logging.config
 
 
 # PARAMS
-LOG_ROOT_DIR = 'log'
+LOG_ROOT_DIR = os.getenv('LOG_ROOT_DIR', 'log')
+ROLLBAR_TOKEN = os.getenv('ROLLBAR_TOKEN', 'access_token')
+ROLLBAR_ENV = os.getenv('ROLLBAR_ENV', 'production')
+
 
 if not os.path.exists(LOG_ROOT_DIR):
     os.makedirs(LOG_ROOT_DIR)
@@ -42,6 +45,14 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'basic',
         },
+        # https://github.com/rollbar/pyrollbar/blob/master/rollbar/logger.py
+        'rollbar': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'access_token': ROLLBAR_TOKEN,
+            'environment': ROLLBAR_ENV,
+            'class': 'rollbar.logger.RollbarHandler'
+        },
         'django_file': {
             'level': 'DEBUG',
             'class': 'logging.handlers.WatchedFileHandler',
@@ -64,7 +75,7 @@ LOGGING = {
     },
     'root': {
         'level': 'INFO',
-        'handlers': ['root_file'],
+        'handlers': ['root_file', 'rollbar'],
     },
 }
 

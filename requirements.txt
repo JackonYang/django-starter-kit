@@ -10,3 +10,6 @@ markdown==2.6.7
 django-filter==0.15.2
 
 django-redis==4.4.4
+
+# logging
+rollbar==0.13.8

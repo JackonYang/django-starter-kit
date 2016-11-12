@@ -29,6 +29,7 @@ def home(request,
     }
 
     logger.info('hits: {hits}'.format(**context))
+    logger.error('rollbar test')
 
     return TemplateResponse(request, template_name, context)
 
