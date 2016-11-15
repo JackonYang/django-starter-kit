@@ -13,3 +13,8 @@ django-redis==4.4.4
 
 # logging
 rollbar==0.13.8
+
+# unittest
+pytest==3.0.4
+pytest-django==3.0.0
+pytest-cov==2.4.0

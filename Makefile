@@ -7,6 +7,12 @@ server:
 	$(PY) manage.py runserver 0.0.0.0:8000
 
 
+############# unit test
+
+test:
+	pytest --cov ./ --cov-report term-missing:skip-covered
+
+
 ############# data and migratations
 
 makemigrations:
@@ -41,3 +47,4 @@ sync-done:
 .PHONY: build
 .PHONY: server makemigrations migrate superuser
 .PHONY: sync-start sync-done
+.PHONY: test

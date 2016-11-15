@@ -8,6 +8,10 @@
 # Redis
 dump.rdb
 
+# pytest
+.cache
+.coverage
+
 
 ### python ###
 *.py[cod]
