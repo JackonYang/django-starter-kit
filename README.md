@@ -3,6 +3,36 @@
 django starter kit for django 1.10 LTS
 
 
+## docker 中的开发环境
+
+
+#### install docker
+
+- Windows: https://docs.docker.com/engine/installation/windows/
+- Mac: https://docs.docker.com/engine/installation/mac/
+
+
+#### 构建 docker 镜像
+
+```bash
+$ docker-compose build
+```
+
+运行 1 次即可。
+
+只要 dockerfile 不变，无须重复运行。
+
+重复运行也不怕。
+因为会使用缓存, 瞬间完成。
+
+
+#### 启动开发服务器(容器)
+
+```bash
+$ docker-compose up
+```
+
+
 ## Features
 
 
