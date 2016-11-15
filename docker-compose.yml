@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/backend
+    environment:
+      - REDIS_CONN=redis://redis:6379/2
+      - DEBUG=True
+    depends_on:
+      - redis
+    command:
+        python manage.py runserver 0.0.0.0:8000
+
+  redis:
+    image: daocloud.io/redis:3.2.4
