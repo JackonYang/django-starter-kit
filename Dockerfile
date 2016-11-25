@@ -18,7 +18,7 @@ ARG pip_root_url=http://pypi.douban.com/simple/
 RUN pip install --upgrade pip -i $pip_root_url --trusted-host $pip_host
 
 # python packages
-RUN pip install -i $pip_root_url --trusted-host $pip_host django==1.10.3
+RUN pip install -i $pip_root_url --trusted-host $pip_host django==1.8.16
 RUN pip install -i $pip_root_url --trusted-host $pip_host django-grappelli==2.8.1
 RUN pip install -i $pip_root_url --trusted-host $pip_host djangorestframework==3.4.7
 RUN pip install -i $pip_root_url --trusted-host $pip_host markdown==2.6.7
