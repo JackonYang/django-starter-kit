@@ -63,7 +63,7 @@ class QiniuUploadTokenManager(models.Manager):
 
         if request:
             user = request.user
-            data['user'] = user if user.is_authenticated() else None
+            data['user'] = user if user and user.is_authenticated() else None
             data['referrer'] = request.META.get('HTTP_REFERER', "")
             data['ua'] = request.META.get('HTTP_USER_AGENT', "")
             data['ip'] = request.META.get('REMOTE_ADDR', "")
