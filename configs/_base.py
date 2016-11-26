@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    # project apps
+    'upload',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -142,3 +144,4 @@ STATIC_URL = '/static/'
 
 from ._cache import *  # noqa
 from ._logging import *  # noqa
+from ._qiniu import *  # noqa
