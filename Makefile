@@ -10,7 +10,7 @@ server:
 ############# unit test
 
 test:
-	pytest --cov ./ --cov-report term-missing:skip-covered
+	pytest --cov ./ --cov-report term-missing:skip-covered --capture=no
 
 
 ############# data and migratations
