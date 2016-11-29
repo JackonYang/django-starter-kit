@@ -32,6 +32,13 @@ $ docker-compose build
 $ docker-compose up
 ```
 
+#### Mac 本地开发环境
+
+```bash
+$ brew update
+$ brew install libgit2
+```
+
 
 ## Features
 
