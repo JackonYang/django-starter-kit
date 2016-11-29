@@ -15,6 +15,7 @@ services:
       - redis
     command:
         python manage.py runserver 0.0.0.0:8000
+    hostname: django-in-docker
 
   redis:
     image: daocloud.io/redis:3.2.4
