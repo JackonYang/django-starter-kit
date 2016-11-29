@@ -2,11 +2,16 @@
 import os
 import logging.config
 
+from utils.proj_vars import (
+    HOSTNAME,
+)
+
 
 # PARAMS
 LOG_ROOT_DIR = os.getenv('LOG_ROOT_DIR', 'log')
 ROLLBAR_TOKEN = os.getenv('ROLLBAR_TOKEN', 'access_token')
-ROLLBAR_ENV = os.getenv('ROLLBAR_ENV', 'production')
+ROLLBAR_ENV = os.getenv('ROLLBAR_ENV', HOSTNAME)
+ROLLBAR_ENABLED = os.getenv('ROLLBAR_ENABLED', 'FALSE')
 
 
 if not os.path.exists(LOG_ROOT_DIR):
@@ -48,15 +53,39 @@ LOGGING = {
         # https://github.com/rollbar/pyrollbar/blob/master/rollbar/logger.py
         'rollbar': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
+            # 'filters': ['require_debug_false'], ROLLBAR_ENABLED.upper() == 'TRUE',
             'access_token': ROLLBAR_TOKEN,
             'environment': ROLLBAR_ENV,
-            'class': 'rollbar.logger.RollbarHandler'
+            'class': 'rollbar.logger.RollbarHandler',
         },
         'django_file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.handlers.WatchedFileHandler',
             'filename': os.path.join(LOG_ROOT_DIR, 'django.log'),
+            'formatter': 'verbose',
+        },
+        'access_warning_file': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'access-warning.log'),
+            'formatter': 'verbose',
+        },
+        'access_error_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'access-error.log'),
+            'formatter': 'verbose',
+        },
+        'elasticsearch_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'elasticsearch.log'),
+            'formatter': 'verbose',
+        },
+        'library_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'library.log'),
             'formatter': 'verbose',
         },
         'root_file': {
@@ -65,17 +94,87 @@ LOGGING = {
             'filename': os.path.join(LOG_ROOT_DIR, 'root.log'),
             'formatter': 'verbose',
         },
+        'warning_file': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'warning.log'),
+            'formatter': 'verbose',
+        },
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'error.log'),
+            'formatter': 'verbose',
+        },
+        'client_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'client.log'),
+            'formatter': 'verbose',
+        },
+        'openapi_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(LOG_ROOT_DIR, 'openapi.log'),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         'django': {
             'level': 'INFO',
-            'handlers': ['console', 'django_file'],
+            'handlers': ['console', 'django_file', 'warning_file', 'error_file'],
             'propagate': False,
         },
+        'django.request': {
+            'level': 'DEBUG',
+            'handlers': ['access_warning_file', 'access_error_file'],
+        },
+        'django.security': {
+            'handlers': ['django_file', 'rollbar'],
+            'level': 'DEBUG',
+        },
+        'client': {
+            'level': 'DEBUG',
+            'handlers': ['rollbar', 'client_file'],
+        },
+        'openapi': {
+            'level': 'DEBUG',
+            'handlers': ['rollbar', 'openapi_file', 'access_warning_file', 'access_error_file'],
+        },
+        'elasticsearch': {
+            # do not log all the elasticsearch messages
+            'level': 'WARNING',
+            'handlers': ['elasticsearch_file', 'warning_file', 'error_file'],
+            'propagate': False,
+        },
+        'gensim': {
+            'propagate': False,
+            'handlers': ['library_file', ],
+        },
+        'summa': {
+            'propagate': False,
+            'handlers': ['library_file', ],
+        },
+        'theano': {
+            'propagate': False,
+            'handlers': ['library_file', ],
+        },
+        'urllib3': {
+            'propagate': False,
+            'handlers': ['library_file', ],
+        },
+        'jieba': {
+            'propagate': False,
+            'handlers': ['library_file', ],
+        },
+        'langid': {
+            'propagate': False,
+            'handlers': ['library_file', ],
+        }
     },
     'root': {
         'level': 'INFO',
-        'handlers': ['root_file', 'rollbar'],
+        'handlers': ['root_file', 'rollbar', 'warning_file', 'error_file'],
     },
 }
 
