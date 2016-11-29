@@ -11,7 +11,7 @@ from utils.proj_vars import (
 LOG_ROOT_DIR = os.getenv('LOG_ROOT_DIR', 'log')
 ROLLBAR_TOKEN = os.getenv('ROLLBAR_TOKEN', 'access_token')
 ROLLBAR_ENV = os.getenv('ROLLBAR_ENV', HOSTNAME)
-ROLLBAR_ENABLED = os.getenv('ROLLBAR_ENABLED', 'FALSE')
+ROLLBAR_ENABLED = (os.getenv('ROLLBAR_ENABLED', 'FALSE').upper() == 'TRUE')
 
 
 if not os.path.exists(LOG_ROOT_DIR):
@@ -42,6 +42,9 @@ LOGGING = {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse',
         },
+        'require_rollbar_enabled': {
+            '()': 'utils.log.RequireRollbarEnabled',
+        },
     },
     'handlers': {
         'console': {
@@ -53,7 +56,7 @@ LOGGING = {
         # https://github.com/rollbar/pyrollbar/blob/master/rollbar/logger.py
         'rollbar': {
             'level': 'ERROR',
-            # 'filters': ['require_debug_false'], ROLLBAR_ENABLED.upper() == 'TRUE',
+            'filters': ['require_rollbar_enabled'],
             'access_token': ROLLBAR_TOKEN,
             'environment': ROLLBAR_ENV,
             'class': 'rollbar.logger.RollbarHandler',
