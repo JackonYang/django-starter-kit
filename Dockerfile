@@ -5,6 +5,12 @@
 FROM daocloud.io/python:2.7
 MAINTAINER JackonYang <i@jackon.me>>
 
+RUN apt-get update
+
+# install packages from source code
+RUN apt-get install -y wget
+RUN apt-get install -y cmake
+
 
 # http://stackoverflow.com/questions/23524976/capturing-output-of-python-script-run-inside-a-docker-container
 ENV PYTHONUNBUFFERED=0
@@ -25,6 +31,23 @@ RUN pip install -i $pip_root_url --trusted-host $pip_host markdown==2.6.7
 RUN pip install -i $pip_root_url --trusted-host $pip_host django-filter==0.15.2
 RUN pip install -i $pip_root_url --trusted-host $pip_host django-redis==4.4.4
 RUN pip install -i $pip_root_url --trusted-host $pip_host rollbar==0.13.8
+
+
+# unittest
+RUN pip install -i $pip_root_url --trusted-host $pip_host pytest==3.0.4
+RUN pip install -i $pip_root_url --trusted-host $pip_host pytest-django==3.0.0
+RUN pip install -i $pip_root_url --trusted-host $pip_host pytest-cov==2.4.0
+
+
+# pygit2 and its dependencies
+RUN wget https://github.com/libgit2/libgit2/archive/v0.24.0.tar.gz && \
+tar xzf v0.24.0.tar.gz && \
+cd libgit2-0.24.0/ && \
+cmake . && \
+make && \
+make install
+RUN ldconfig
+RUN pip install -i $pip_root_url --trusted-host $pip_host pygit2==0.24.2
 
 
 COPY . /backend
