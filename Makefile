@@ -7,6 +7,10 @@ server:
 	$(PY) manage.py runserver 0.0.0.0:8000
 
 
+debug:
+	docker-compose run --service-ports web /bin/bash
+
+
 ############# unit test
 
 test:
@@ -48,3 +52,4 @@ sync-done:
 .PHONY: server makemigrations migrate superuser
 .PHONY: sync-start sync-done
 .PHONY: test
+.PHONY: debug
