@@ -21,6 +21,7 @@ from . import views
 
 api_patterns = [
     url(r'^$', views.api_home, name='api_home'),
+    url(r'^corpus/', include('corpus.urls')),
 ]
 
 
