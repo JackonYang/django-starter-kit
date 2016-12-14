@@ -25,7 +25,7 @@ class UserText(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        self.brief()
+        return self.brief()
 
     class Meta:
         verbose_name = u"用户文本"
