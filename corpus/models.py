@@ -19,7 +19,7 @@ class Tag(models.Model):
 class UserText(models.Model):
     text = models.TextField(u'Text')
     tags = models.ManyToManyField(Tag)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True)
 
     last_modified_time = models.DateTimeField(auto_now=True)
     created_time = models.DateTimeField(auto_now_add=True)
