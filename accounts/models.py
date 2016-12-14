@@ -1,9 +1,18 @@
 # -*- coding: utf-8 -*-
+import random
 from django.db import models
 
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager,
 )
+
+
+def get_random_email_error():
+    return random.randint(1, 999999)
+
+
+def get_random_phone_error():
+    return random.randint(1, 999999)
 
 
 class UserManager_(BaseUserManager):
@@ -51,6 +60,16 @@ class User_(AbstractBaseUser):
 
     status = models.IntegerField(u'状态', choices=STATUS_CHOICES, default=S_NORMAL)
 
+    # RFC 2821 places a 256 character limit on the forward-path. But a path is defined as
+    # Path = "<" [ A-d-l ":" ] Mailbox ">"
+    # So the forward-path will contain at least a pair of angle brackets in addition to the Mailbox.
+    # This limits the Mailbox (i.e. the email address) to 254 characters.
+    email = models.CharField(max_length=254, default='', blank=True)
+    email_error = models.IntegerField(default=get_random_email_error)
+
+    mobile = models.CharField(max_length=50, default='', blank=True)
+    mobile_error = models.IntegerField(default=get_random_phone_error)
+
     # 1. must have a single unique field that can be used for identification purposes
     # 2. provide a way to address the user in a short and long form
 
@@ -67,6 +86,11 @@ class User_(AbstractBaseUser):
     class Meta:
         verbose_name = u'用户账号系统'
         verbose_name_plural = verbose_name
+
+        unique_together = (
+            ('email', 'email_error'),
+            ('mobile', 'mobile_error'),
+        )
 
     @property
     def is_active(self):

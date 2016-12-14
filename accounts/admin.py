@@ -95,6 +95,10 @@ class UserAdmin(BaseUserAdmin):
                 'username',
                 'status',
                 'password',
+                'email',
+                'email_error',
+                'mobile',
+                'mobile_error',
             ),
         }),
         (u'基本信息', {
