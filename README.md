@@ -29,6 +29,16 @@ $ docker-compose build
 #### 启动开发服务器(容器)
 
 ```bash
+$ make debug
+root@django-in-docker:/backend# make migrate
+# createsuperuser if this the first migrate
+root@django-in-docker:/backend# make createsuperuser
+root@django-in-docker:/backend# make server
+```
+
+or
+
+```bash
 $ docker-compose up
 ```
 
