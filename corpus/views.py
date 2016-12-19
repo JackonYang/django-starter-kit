@@ -19,6 +19,7 @@ class UserTextList(generics.ListCreateAPIView):
         filters.OrderingFilter,
         filters.SearchFilter,
     )
+    filter_fields = ('tags', )
 
     search_fields = (
         'text',
