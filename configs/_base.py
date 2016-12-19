@@ -145,6 +145,23 @@ STATIC_URL = '/static/'
 
 AUTH_USER_MODEL = 'accounts.User_'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.DjangoFilterBackend',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'utils.pagination.BasePagination',
+    # 'DATETIME_FORMAT': DATETIME_FORMAT,
+    # 'DATE_FORMAT': DATE_FORMAT,
+}
+
+
+
 
 from ._cache import *  # noqa
 from ._logging import *  # noqa

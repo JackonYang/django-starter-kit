@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 from rest_framework import generics, filters
 
-# from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+# from rest_framework.permissions import AllowAny
 
 from .serializers import (
     UserTextSerializer,
@@ -11,9 +12,10 @@ from .serializers import (
 class UserTextList(generics.ListCreateAPIView):
     serializer_class = UserTextSerializer
 
-    # permission_classes = (IsAuthenticatedOrReadOnly, )
+    permission_classes = (IsAuthenticatedOrReadOnly, )
 
     filter_backends = (
+        filters.DjangoFilterBackend,
         filters.OrderingFilter,
         filters.SearchFilter,
     )
