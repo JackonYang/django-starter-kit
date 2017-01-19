@@ -40,6 +40,9 @@ build:
 crawler:
 	$(PY) manage.py runscript crawler
 
+fetchall:
+	$(PY) manage.py runscript fetch_all
+
 
 ############# sync
 
