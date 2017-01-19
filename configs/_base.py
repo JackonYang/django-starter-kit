@@ -168,3 +168,4 @@ REST_FRAMEWORK = {
 
 from ._cache import *  # noqa
 from ._logging import *  # noqa
+from ._crawler import *  # noqa
