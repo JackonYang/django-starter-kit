@@ -21,7 +21,7 @@ def wait(f):
     lock_name = 'lottery-http-lock'
 
     def _wrap_func(*args, **kwargs):
-        t = _conn.ttl(lock_name)
+        t = max(_conn.ttl(lock_name), settings.DELAY_FORCE_MIN)
         if t > 0:
             logger.info('sleep %s second' % t)
             time.sleep(t)
@@ -33,7 +33,7 @@ def wait(f):
 
 
 @wait
-def fetch(days=0, timeout=30):
+def fetch(days=0, timeout=15):
     logger.info('%s days data. fetching...' % days)
     try:
         count = 0
@@ -41,9 +41,15 @@ def fetch(days=0, timeout=30):
         for item in rsp.json().get('iteam', [])[::-1]:
             count += int(Record.create(**item))
         logger.info('%s new data saved' % count)
+        if count:
+            t_new = 30
+            logger.info('sleep %s seconds because of new data got' % t_new)
+            time.sleep(t_new)
         return count
     except requests.exceptions.Timeout:
         logger.warning('timeout!')
+    except requests.exceptions.ConnectionError:
+        logger.error('Connection refused!')
     except Exception:
         logger.exception('fail to fetch data')
 
