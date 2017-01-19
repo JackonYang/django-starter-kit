@@ -26,13 +26,15 @@ $ docker-compose build
 因为会使用缓存, 瞬间完成。
 
 
-#### 启动开发服务器(容器)
+#### 启动开发服务器
+
+检查 redis server 已经开启。
 
 ```bash
 $ make debug
 root@django-in-docker:/backend# make migrate
 # createsuperuser if this the first migrate
-root@django-in-docker:/backend# make createsuperuser
+root@django-in-docker:/backend# make superuser
 root@django-in-docker:/backend# make server
 ```
 
@@ -46,7 +48,10 @@ $ docker-compose up
 
 ```bash
 $ brew update
-$ brew install libgit2
+# libgit2 v0.24x
+$ brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f98b7c21000191830f338390be7fe7ebe055b192/Formula/libgit2.rb
+# python libraries
+$ make build
 ```
 
 
