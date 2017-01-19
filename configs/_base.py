@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'accounts',
     'corpus',
+    # user defined
+    'data',
 ]
 
 MIDDLEWARE_CLASSES = [
