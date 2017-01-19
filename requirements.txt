@@ -11,6 +11,12 @@ django-filter==0.15.2
 
 django-redis==4.4.4
 
+# http://django-extensions-zh.readthedocs.io/
+django-extensions==1.6.7
+
+# http
+requests==2.12.5
+
 # logging
 rollbar==0.13.8
 

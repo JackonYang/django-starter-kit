@@ -35,6 +35,12 @@ build:
 	$(PIP) install -i http://pypi.douban.com/simple/ --trusted-host pypi.douban.com -r requirements.txt
 
 
+############# env setup
+
+crawler:
+	$(PY) manage.py runscript crawler
+
+
 ############# sync
 
 sync-start:
